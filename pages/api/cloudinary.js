@@ -1,13 +1,17 @@
 import cloudinary from 'cloudinary';
 
 cloudinary.v2.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  cloud_name: process.env.cloudinary_cloud_name,
   api_key: process.env.cloudinary_api_key,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+  api_secret: process.env.cloudinary_api_secret,
 });
 
 export default async function handler(req, res) {
   const { folder } = req.query;
+
+  if (!folder) {
+    return res.status(400).json({ error: 'Folder is required' });
+  }
 
   try {
     const result = await cloudinary.v2.search
@@ -16,8 +20,12 @@ export default async function handler(req, res) {
       .max_results(50)
       .execute();
 
-    res.status(200).json(result.resources);
+    return res.status(200).json({
+      resources: result.resources,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      error: error.message,
+    });
   }
 }
