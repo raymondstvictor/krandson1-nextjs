@@ -10,15 +10,15 @@ export default function Home() {
       <h1>KRANDSON Photography</h1>
 
       <p>Luxury 360 Photo Booth Experiences</p>
-  <h2 style={{ marginTop: '50px' }}>360 Photo Booth</h2>
+  <h2 style={{ marginTop: '50px' }}>360-photo-booth</h2>
 
-<CloudinaryGallery folder="360 Photo Booth" />
+<CloudinaryGallery folder="360-photo-booth" />
 
 
 
 <h2 style={{ marginTop: '50px' }}>Luxury LED iPad Photo Booth</h2>
 
-<CloudinaryGallery folder="iPad Photo Booth" />
+<CloudinaryGallery folder="iPad-photo-booth" />
 
 
 
