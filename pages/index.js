@@ -12,13 +12,13 @@ export default function Home() {
       <p>Luxury 360 Photo Booth Experiences</p>
   <h2 style={{ marginTop: '50px' }}>360 Photo Booth</h2>
 
-<CloudinaryGallery folder="360 photo-booth" />
+<CloudinaryGallery folder="360 photo booth" />
 
 
 
 <h2 style={{ marginTop: '50px' }}>Luxury LED iPad Photo Booth</h2>
 
-<CloudinaryGallery folder="ipad photo-booth" />
+<CloudinaryGallery folder="ipad photo booth" />
 
 
 
