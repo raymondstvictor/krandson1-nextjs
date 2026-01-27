@@ -1,3 +1,6 @@
+import CloudinaryGallery from '../components/CloudinaryGallery';
+
+
 export default function Home() {
 
   return (
@@ -7,6 +10,17 @@ export default function Home() {
       <h1>KRANDSON Photography</h1>
 
       <p>Luxury 360 Photo Booth Experiences</p>
+  <h2 style={{ marginTop: '50px' }}>360 Photo Booth</h2>
+
+<CloudinaryGallery folder="360-photo-booth" />
+
+
+
+<h2 style={{ marginTop: '50px' }}>Luxury LED iPad Photo Booth</h2>
+
+<CloudinaryGallery folder="ipad-photo-booth" />
+
+
 
       <a
 
