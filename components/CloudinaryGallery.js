@@ -1,9 +1,11 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 
 export default function CloudinaryGallery({ folder }) {
   const [media, setMedia] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMedia() {
@@ -18,36 +20,33 @@ export default function CloudinaryGallery({ folder }) {
         setMedia(data.resources || []);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
 
     loadMedia();
   }, [folder]);
 
-  if (!media.length) {
-    return <p style={{ opacity: 0.6 }}>No media found.</p>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (!media.length) return <p>No media found.</p>;
 
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
         gap: '16px',
         marginTop: '20px'
       }}
     >
-      {media.map((item) => (
-        <div key={item.public_id}>
-          <img
-            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${item.public_id}.${item.format}`}
-            alt=""
-            style={{
-              width: '100%',
-              borderRadius: '12px'
-            }}
-          />
-        </div>
+      {media.map(item => (
+        <img
+          key={item.public_id}
+          src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${item.public_id}.${item.format}`}
+          alt=""
+          style={{ width: '100%', borderRadius: '8px' }}
+        />
       ))}
     </div>
   );
