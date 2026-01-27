@@ -1,5 +1,4 @@
 
-'use client';
 
 import { useEffect, useState } from 'react';
 
@@ -10,14 +9,9 @@ export default function CloudinaryGallery({ folder }) {
   useEffect(() => {
     async function loadMedia() {
       try {
-        const res = await fetch(
-          `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/list/${folder}.json`
-        );
-
-        if (!res.ok) throw new Error('Failed to load media');
-
+        const res = await fetch(`/api/cloudinary?folder=${folder}`);
         const data = await res.json();
-        setMedia(data.resources || []);
+        setMedia(data || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -32,21 +26,23 @@ export default function CloudinaryGallery({ folder }) {
   if (!media.length) return <p>No media found.</p>;
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-        gap: '16px',
-        marginTop: '20px'
-      }}
-    >
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '15px' }}>
       {media.map(item => (
-        <img
-          key={item.public_id}
-          src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${item.public_id}.${item.format}`}
-          alt=""
-          style={{ width: '100%', borderRadius: '8px' }}
-        />
+        item.resource_type === 'video' ? (
+          <video
+            key={item.public_id}
+            src={item.secure_url}
+            controls
+            style={{ width: '100%', borderRadius: '8px' }}
+          />
+        ) : (
+          <img
+            key={item.public_id}
+            src={item.secure_url}
+            alt=""
+            style={{ width: '100%', borderRadius: '8px' }}
+          />
+        )
       ))}
     </div>
   );
