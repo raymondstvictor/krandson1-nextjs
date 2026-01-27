@@ -18,7 +18,7 @@ export default function Home() {
 
 <h2 style={{ marginTop: '50px' }}>Luxury LED iPad Photo Booth</h2>
 
-<CloudinaryGallery folder="iPad-photo-booth" />
+<CloudinaryGallery folder="ipad-photo-booth" />
 
 
 
