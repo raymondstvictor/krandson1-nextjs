@@ -1,5 +1,7 @@
 
 
+'use client';
+
 import { useEffect, useState } from 'react';
 
 export default function CloudinaryGallery({ folder }) {
@@ -11,7 +13,7 @@ export default function CloudinaryGallery({ folder }) {
       try {
         const res = await fetch(`/api/cloudinary?folder=${folder}`);
         const data = await res.json();
-        setMedia(data || []);
+        setMedia(data.resources || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -22,12 +24,19 @@ export default function CloudinaryGallery({ folder }) {
     loadMedia();
   }, [folder]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading media...</p>;
   if (!media.length) return <p>No media found.</p>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '15px' }}>
-      {media.map(item => (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+        gap: '15px',
+        marginTop: '20px',
+      }}
+    >
+      {media.map((item) =>
         item.resource_type === 'video' ? (
           <video
             key={item.public_id}
@@ -43,7 +52,7 @@ export default function CloudinaryGallery({ folder }) {
             style={{ width: '100%', borderRadius: '8px' }}
           />
         )
-      ))}
+      )}
     </div>
   );
 }
