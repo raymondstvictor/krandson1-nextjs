@@ -4,74 +4,51 @@ import { useEffect, useState } from 'react';
 
 export default function CloudinaryGallery({ folder }) {
   const [media, setMedia] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMedia() {
       try {
         const res = await fetch(
-          `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/resources/search`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Basic ${btoa(
-                process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY +
-                  ':' +
-                  process.env.CLOUDINARY_API_SECRET
-              )}`,
-            },
-            body: JSON.stringify({
-              expression: `folder:${folder}`,
-              max_results: 30,
-            }),
-          }
+          `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/list/${folder}.json`
         );
 
-        if (!res.ok) {
-          throw new Error('Failed to load Cloudinary media');
-        }
+        if (!res.ok) throw new Error('Failed to load media');
 
         const data = await res.json();
         setMedia(data.resources || []);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     }
 
     loadMedia();
   }, [folder]);
 
-  if (loading) return <p>Loading media...</p>;
+  if (!media.length) {
+    return <p style={{ opacity: 0.6 }}>No media found.</p>;
+  }
 
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-        gap: '15px',
-        marginTop: '20px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+        gap: '16px',
+        marginTop: '20px'
       }}
     >
-      {media.map((item) =>
-        item.resource_type === 'video' ? (
-          <video
-            key={item.public_id}
-            src={item.secure_url}
-            controls
-            style={{ width: '100%', borderRadius: '8px' }}
-          />
-        ) : (
+      {media.map((item) => (
+        <div key={item.public_id}>
           <img
-            key={item.public_id}
-            src={item.secure_url}
+            src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${item.public_id}.${item.format}`}
             alt=""
-            style={{ width: '100%', borderRadius: '8px' }}
+            style={{
+              width: '100%',
+              borderRadius: '12px'
+            }}
           />
-        )
-      )}
+        </div>
+      ))}
     </div>
   );
 }
