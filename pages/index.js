@@ -1,4 +1,3 @@
-use client ;
 import CloudinaryGallery from '../components/CloudinaryGallery';
 
 
