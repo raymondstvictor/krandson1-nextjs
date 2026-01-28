@@ -1,34 +1,41 @@
-import cloudinary from "cloudinary";
 
-// ✅ 1. Cloudinary config (ADD THIS — do not remove)
-cloudinary.v2.config({
-  cloud_name: process.env.cloudinary_cloud_name,
-  api_key: process.env.cloudinary_api_key,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true,
-});
+'use client';
 
-// ✅ 2. API route
-export default async function handler(req, res) {
-  const { folder } = req.query;
+import { useEffect, useState } from 'react';
 
-  if (!folder) {
-    return res.status(400).json({ error: "Folder is required" });
-  }
+export default function CloudinaryGallery({ folder }) {
+  const [media, setMedia] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  try {
-    // ✅ 3. QUOTED folder search (THIS IS THE FIX)
-    const result = await cloudinary.v2.search
-      .expression(`folder:"${folder}"`)
-      .max_results(50)
-      .execute();
+  useEffect(() => {
+    async function loadMedia() {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/cloudinary?folder=${folder}`);
+        const data = await res.json();
+        setMedia(data.resources || []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-    return res.status(200).json({
-      resources: result.resources,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    });
-  }
+    loadMedia();
+  }, [folder]); // ✅ THIS is the critical fix
+
+  if (loading) return <p>Loading...</p>;
+
+  return (
+    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      {media.map((item) => (
+        <img
+          key={item.public_id}
+          src={item.secure_url}
+          alt=""
+          style={{ width: '300px', borderRadius: '12px' }}
+        />
+      ))}
+    </div>
+  );
 }
