@@ -1,41 +1,29 @@
 
-'use client';
+import cloudinary from "cloudinary";
 
-import { useEffect, useState } from 'react';
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
-export default function CloudinaryGallery({ folder }) {
-  const [media, setMedia] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default async function handler(req, res) {
+  const { folder } = req.query;
 
-  useEffect(() => {
-    async function loadMedia() {
-      try {
-        setLoading(true);
-        const res = await fetch(`/api/cloudinary?folder=${folder}`);
-        const data = await res.json();
-        setMedia(data.resources || []);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    }
+  if (!folder) {
+    return res.status(400).json({ error: "Folder is required" });
+  }
 
-    loadMedia();
-  }, [folder]); // ✅ THIS is the critical fix
+  try {
+    const result = await cloudinary.v2.search
+      .expression(`folder:${folder}`)
+      .max_results(50)
+      .execute();
 
-  if (loading) return <p>Loading...</p>;
-
-  return (
-    <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-      {media.map((item) => (
-        <img
-          key={item.public_id}
-          src={item.secure_url}
-          alt=""
-          style={{ width: '300px', borderRadius: '12px' }}
-        />
-      ))}
-    </div>
-  );
+    return res.status(200).json({ resources: result.resources });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
+  }
 }
