@@ -15,17 +15,13 @@ export default async function handler(req, res) {
 
   try {
     const result = await cloudinary.v2.search
-      .expression(`folder:${folder}`)
+      .expression(`folder="${folder}"`)
       .sort_by('created_at', 'desc')
       .max_results(50)
       .execute();
 
-    return res.status(200).json({
-      resources: result.resources,
-    });
+    res.status(200).json({ resources: result.resources });
   } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    });
+    res.status(500).json({ error: error.message });
   }
 }
