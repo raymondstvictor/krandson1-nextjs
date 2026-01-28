@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-export default function CloudinaryGallery({ folder }) {
+export default function CloudinaryGallery() {
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMedia() {
       try {
-        const res = await fetch(`/api/cloudinary?folder=${folder}`);
+        const res = await fetch("/api/cloudinary");
         const data = await res.json();
         setMedia(data.resources || []);
       } catch (err) {
@@ -20,18 +20,18 @@ export default function CloudinaryGallery({ folder }) {
     }
 
     loadMedia();
-  }, [folder]);
+  }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading photos...</p>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '10px' }}>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "16px" }}>
       {media.map((item) => (
         <img
           key={item.public_id}
           src={item.secure_url}
           alt=""
-          style={{ width: '100%', borderRadius: '8px' }}
+          style={{ width: "100%", borderRadius: "8px" }}
         />
       ))}
     </div>
