@@ -1,9 +1,9 @@
 import cloudinary from 'cloudinary';
 
 cloudinary.v2.config({
-  cloud_name: process.env.cloudinary_cloud_name,
+  cloud_name: process.env.cloudinary_Cloud_name,
   api_key: process.env.cloudinary_api_key,
-  api_secret: process.env.cloudinary_api_secret,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export default async function handler(req, res) {
@@ -21,11 +21,10 @@ export default async function handler(req, res) {
       .execute();
 
     return res.status(200).json({
-      resources: result.resources,
+      resources: result.resources || [],
     });
   } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    });
+    console.error(error);
+    return res.status(500).json({ error: error.message });
   }
 }
