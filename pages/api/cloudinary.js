@@ -1,27 +1,34 @@
-import cloudinary from 'cloudinary';
+import cloudinary from "cloudinary";
 
+// ✅ 1. Cloudinary config (ADD THIS — do not remove)
 cloudinary.v2.config({
-  cloud_name: process.env.cloudinary_Cloud_name,
+  cloud_name: process.env.cloudinary_cloud_name,
   api_key: process.env.cloudinary_api_key,
   api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
 
+// ✅ 2. API route
 export default async function handler(req, res) {
   const { folder } = req.query;
 
   if (!folder) {
-    return res.status(400).json({ error: 'Folder is required' });
+    return res.status(400).json({ error: "Folder is required" });
   }
 
   try {
+    // ✅ 3. QUOTED folder search (THIS IS THE FIX)
     const result = await cloudinary.v2.search
-      .expression(`folder="${folder}"`)
-      .sort_by('created_at', 'desc')
+      .expression(`folder:"${folder}"`)
       .max_results(50)
       .execute();
 
-    res.status(200).json({ resources: result.resources });
+    return res.status(200).json({
+      resources: result.resources,
+    });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      error: error.message,
+    });
   }
 }
