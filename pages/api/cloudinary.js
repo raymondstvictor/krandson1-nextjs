@@ -9,21 +9,19 @@ cloudinary.v2.config({
 });
 
 export default async function handler(req, res) {
-  const { folder } = req.query;
-
-  if (!folder) {
-    return res.status(400).json({ error: "Folder is required" });
-  }
-
   try {
     const result = await cloudinary.v2.search
-      .expression(`folder:${folder}`)
+      .expression("resource_type:image")
       .max_results(50)
       .execute();
 
-    return res.status(200).json({ resources: result.resources });
+    return res.status(200).json({
+      resources: result.resources,
+    });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: error.message });
+    return res.status(500).json({
+      error: error.message,
+    });
   }
 }
