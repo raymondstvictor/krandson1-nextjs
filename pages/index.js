@@ -80,25 +80,43 @@ export default function Home() {
           }}
         />
       </section>
-          <a
-  href="tel:9179074544"
-  style={{
-    position: "fixed",
-    bottom: "25px",
-    right: "25px",
-    backgroundColor: "#d4af37",
-    color: "#0b0b0b",
-    padding: "16px 22px",
-    borderRadius: "50px",
-    fontWeight: "bold",
-    fontSize: "16px",
-    textDecoration: "none",
-    boxShadow: "0 8px 25px rgba(0,0,0,0.6)",
-    zIndex: 9999,
-  }}
->
-  📞 Call / Text Now
-</a>
+  <>
+  <style>{`
+    @keyframes luxuryPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(212,175,55, 0.6);
+      }
+      70% {
+        box-shadow: 0 0 0 18px rgba(212,175,55, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(212,175,55, 0);
+      }
+    }
+  `}</style>
+
+  <a
+    href="tel:9179074544"
+    style={{
+      position: "fixed",
+      bottom: "25px",
+      right: "25px",
+      backgroundColor: "#d4af37",
+      color: "#0b0b0b",
+      padding: "16px 24px",
+      borderRadius: "50px",
+      fontWeight: "700",
+      fontSize: "16px",
+      letterSpacing: "0.5px",
+      textDecoration: "none",
+      animation: "luxuryPulse 3s infinite",
+      boxShadow: "0 8px 30px rgba(0,0,0,0.7)",
+      zIndex: 9999,
+    }}
+  >
+    📞 Call / Text Now
+  </a>
+</>
     </main>
   );
 }
