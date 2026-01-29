@@ -80,6 +80,25 @@ export default function Home() {
           }}
         />
       </section>
+          <a
+  href="tel:9179074544"
+  style={{
+    position: "fixed",
+    bottom: "25px",
+    right: "25px",
+    backgroundColor: "#d4af37",
+    color: "#0b0b0b",
+    padding: "16px 22px",
+    borderRadius: "50px",
+    fontWeight: "bold",
+    fontSize: "16px",
+    textDecoration: "none",
+    boxShadow: "0 8px 25px rgba(0,0,0,0.6)",
+    zIndex: 9999,
+  }}
+>
+  📞 Call / Text Now
+</a>
     </main>
   );
 }
