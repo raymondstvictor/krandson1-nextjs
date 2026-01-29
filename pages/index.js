@@ -1,32 +1,86 @@
-
 export default function Home() {
   return (
     <main
       style={{
-        padding: 40,
-        maxWidth: "900px",
-        margin: "0 auto",
-        background: "#fff",
+        padding: "60px 20px",
+        backgroundColor: "#0b0b0b",
+        color: "#f5f5f5",
+        fontFamily: "Georgia, serif",
+        textAlign: "center",
+        minHeight: "100vh",
       }}
     >
-      <h1>KRANDSON Photography</h1>
-      <p>Luxury 360 Photo Booth Experiences</p>
+      <h1
+        style={{
+          color: "#d4af37",
+          fontSize: "42px",
+          letterSpacing: "2px",
+          marginBottom: "10px",
+        }}
+      >
+        KRANDSON Photography
+      </h1>
 
-      <h2>360 Photo Booth</h2>
-      <img
-        src="/360-photo-booth/photo1.jpg"
-        width="300"
-        style={{ display: "block", marginBottom: 20 }}
-      />
+      <p
+        style={{
+          fontSize: "18px",
+          color: "#cccccc",
+          marginBottom: "60px",
+        }}
+      >
+        Luxury 360 Photo Booth Experiences
+      </p>
 
-      <h2>iPad Photo Booth</h2>
-      <img
-        src="/ipad-photo-booth/ipad1.jpg"
-        width="300"
-        style={{ display: "block", marginBottom: 20 }}
-      />
+      {/* 360 PHOTO BOOTH */}
+      <section style={{ marginBottom: "80px" }}>
+        <h2
+          style={{
+            color: "#d4af37",
+            fontSize: "28px",
+            marginBottom: "20px",
+          }}
+        >
+          360 Photo Booth
+        </h2>
 
-      
+        <img
+          src="/360-photo-booth/photo1.jpg"
+          alt="360 Photo Booth"
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            borderRadius: "12px",
+            border: "3px solid #d4af37",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+          }}
+        />
+      </section>
+
+      {/* IPAD PHOTO BOOTH */}
+      <section>
+        <h2
+          style={{
+            color: "#d4af37",
+            fontSize: "28px",
+            marginBottom: "20px",
+          }}
+        >
+          iPad Photo Booth
+        </h2>
+
+        <img
+          src="/ipad-photo-booth/ipad1.jpg"
+          alt="iPad Photo Booth"
+          style={{
+            width: "100%",
+            maxWidth: "500px",
+            borderRadius: "12px",
+            border: "3px solid #d4af37",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.6)",
+          }}
+        />
+      </section>
     </main>
   );
 }
+
