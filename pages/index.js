@@ -26,9 +26,7 @@ export default function Home() {
         style={{ display: "block", marginBottom: 20 }}
       />
 
-      <p style={{ color: "red", fontWeight: "bold" }}>
-        DEPLOY TEST — THIS TEXT MUST APPEAR
-      </p>
+      
     </main>
   );
 }
