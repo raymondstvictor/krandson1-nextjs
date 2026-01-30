@@ -58,7 +58,6 @@ export default function Home() {
         </section>
 
         {/* DEPLOY TEST */}
-        <p className="deploy-test">DEPLOY TEST — THIS TEXT MUST APPEAR</p>
 
         {/* STYLES */}
         <style jsx>{`
@@ -101,7 +100,7 @@ export default function Home() {
           }
 
           .section {
-            margin-bottom: 60px;
+            margin-bottom: 80px;
           }
 
           h2 {
@@ -109,10 +108,15 @@ export default function Home() {
             margin-bottom: 20px;
           }
 
-          .media {
-            max-width: 90%;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.35);
+         .media {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border-radius: 14px;
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+  margin: 0 auto;
+  display: block;
+}
           }
 
           .instagram {
