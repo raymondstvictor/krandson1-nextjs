@@ -1,3 +1,4 @@
+import script from "next/script";
 export default function Home() {
   return (
     <>
@@ -89,7 +90,7 @@ export default function Home() {
           }
         }
       `}</style>
-   <script async src="//www.instagram.com/embed.js"></script>
+  
         </>
   );
 }
